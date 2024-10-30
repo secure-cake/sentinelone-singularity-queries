@@ -2,15 +2,13 @@
 
 ## Comparison Operators: 
 
-https://usea1-017.sentinelone.net/docs/en/operators-2545125.html
-
 ### And, Or, Not: “implicit AND” when combining query statements
 ```
-  event.type = ‘Process Creation’ src.process.name = ‘svchost.exe’ 	
+  event.type = 'Process Creation' src.process.name = 'svchost.exe' 	
 ```
    (no “AND” required) [CASE Sensitive keywords!]
 ```
-  event.type = ‘Process Creation’ and not (src.process.name = ‘svchost.exe’)
+  event.type = 'Process Creation' and not (src.process.name = 'svchost.exe')
 ```
 ``` 
   event.type = 'Process Creation' and not (src.process.name = 'svchost.exe' or src.process.name = 'services.exe')
@@ -18,7 +16,7 @@ https://usea1-017.sentinelone.net/docs/en/operators-2545125.html
 ``` 
   event.type = 'DNS Resolved' src.process.name != 'svchost.exe'		
 ``` 
-   (‘!=’ synonymous with ‘AND NOT’)
+   ('!=' synonymous with 'AND NOT’)
 
 ### Contains:
 ```
@@ -38,24 +36,24 @@ event.type='IP Connect' src.ip.address >'192.168.21.1' src.ip.address < '192.168
 ```
 
 ### Regex: 
-https://usea1-017.sentinelone.net/docs/en/regular-expressions.html
+(pending)
 
 ### Wildcards: 
 ```
- * contains ‘.ps1’
+ * contains '.ps1'
 ```
 
 ## Topical Search Examples:
 
 ### Fields?: what fields are avaiable?
 ``` 
-indicator.name contains ‘service’
+indicator.name contains 'service'
 ```
 ```
-indicator.name contains ‘task’
+indicator.name contains 'task’
 ```
 ```
-event.type contains ‘connect’
+event.type contains 'connect'
 ```
 
 ## Categorical Search Examples:
@@ -87,7 +85,7 @@ event.url.action='GET' url.address contains '.zip'
 event.url.action='POST' src.process.cmdline contains 'ps1'
 ```
 ```
-event.type='IP Connect' src.ip.address='192.168.21.37' event.network.connectionStatus='SUCCESS' dst.port.number=445
+event.type='IP Connect' src.ip.address='192.168.21.37' event.network.connectionStatus='SUCCESS' dst.port.number='445' 
 dst.ip.address matches "^([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])(?<!172\.(16|17|18|19|20|21|22|23|24|25|26|27|28|29|30|31))(?<!127)(?<!^10)(?<!^0)\.([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])(?<!192\.168)(?<!172\.(16|17|18|19|20|21|22|23|24|25|26|27|28|29|30|31))\.([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])\.([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])$"
 dst.ip.address matches "^([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])(?<!172\.(16|17|18|19|20|21|22|23|24|25|26|27|28|29|30|31))(?<!127)(?<!^10)(?<!^0)\.([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])(?<!192\.168)(?<!172\.(16|17|18|19|20|21|22|23|24|25|26|27|28|29|30|31))\.([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])\.([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])$" src.process.name != 'EXCEL.EXE' src.process.name != 'services.exe' src.process.name != 'explorer.exe'
 ```
