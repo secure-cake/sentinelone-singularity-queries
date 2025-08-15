@@ -1,0 +1,33 @@
+SentinelOne Queries for Detecting Remote Access Tools
+This collection contains four SentinelOne Deep Visibility queries designed to hunt for the presence of potentially unauthorized Remote Monitoring and Management (RMM), remote access, and file transfer software.
+
+These tools, while often used for legitimate IT administration, are frequently leveraged by threat actors for persistence, lateral movement, and data exfiltration. The queries are broken into smaller, thematic chunks to accommodate SentinelOne's query character limit.
+
+Note: These queries may generate false positives in environments where these tools are used for legitimate purposes. All findings should be investigated for context.
+
+Query 1: Common Remote Desktop & Admin Tool Executables
+This query hunts for specific process names associated with common remote access and administration tools.
+
+eventType = 'Process Create' AND targetProcessName in ('aemagent.exe', 'ammyy_admin.exe', 'aeroadmin.exe', 'anydesk.exe', 'awesun.exe', 'dwagent.exe', 'getscreen.exe', 'gotoassist.exe', 'lmi_rescue.exe', 'mstsc.exe', 'ngrok.exe', 'paexec.exe', 'psexec.exe', 'putty.exe', 'raccess.exe', 'rdpwinst.exe', 'rviewer.exe', 'remotepc.exe', 'rustdesk.exe', 'screenconnect.clientservice.exe', 'splashtopsos.exe', 'support-logmeinrescue.exe', 'supremo.exe', 'takecontrol.exe', 'taniumclient.exe', 'teamviewer_service.exe', 'teamviewer_desktop.exe', 'tightvncviewerportable.exe', 'todesk.exe', 'ultravnc.exe', 'ultraviewer_desktop.exe', 'vncviewer.exe', 'winvnc.exe', 'zohomeeting.exe')
+
+
+
+Query 2: RMM Agent & Service Executables
+This query targets executables related to Remote Monitoring and Management (RMM) platforms and other IT management solutions.
+
+eventType = 'Process Create' AND targetProcessName in ('ateraagent.exe', 'basupsrvc.exe', 'connectwisecontrol.client.exe', 'eraagent.exe', 'itsmagent.exe', 'imperoclientsvc.exe', 'kabuto.service.runner.exe', 'khelpdesk.exe', 'ninjarmmagent.exe', 'oosysagent.exe', 'rmmservice.exe', 'sensoservice.exe', 'syncro.service.exe', 'syncrolive.agent.exe', 'zmagent.exe', 'ateraservice.exe', 'dwagsvc.exe', 'ltsvc.exe', 'meshagent.exe', 'mgntsvc.exe', 'sragent.exe', 'tacticalrmm.exe', 'tailscaled.exe', 'zaservice.exe', 'zerotier.exe', 'zabbix_agentd.exe')
+
+
+
+Query 3: Suspicious File Paths (Program Files)
+This query hunts for installations in common Program Files directories, which can detect the presence of these tools even if the executable is renamed.
+
+eventType in ('Process Create', 'File Create') AND targetFilePath contains any of ('\\Program Files (x86)\\AnyDesk', '\\Program Files (x86)\\Atera Networks', '\\Program Files (x86)\\GoToMyPC', '\\Program Files (x86)\\Kaseya', '\\Program Files (x86)\\mRemoteNG', '\\Program Files (x86)\\Radmin Viewer 3', '\\Program Files (x86)\\ScreenConnect Client', '\\Program Files (x86)\\Splashtop', '\\Program Files\\ATERA Networks', '\\Program Files\\AnyDesk', '\\Program Files\\Bitvise SSH Server', '\\Program Files\\LiteManager Pro', '\\Program Files\\RealVNC\\VNC Server', '\\Program Files\\Remote Utilities', '\\Program Files\\SolarWinds\\Dameware Mini Remote Control', '\\Program Files\\TeamViewer', '\\Program Files\\TightVNC', '\\Program Files\\UltraVNC')
+
+
+
+
+Query 4: Suspicious File Paths (User & ProgramData)
+This query focuses on installations and executables found in user profiles and the ProgramData directory, which are common locations for user-level or portable versions of these tools.
+
+eventType in ('Process Create', 'File Create') AND targetFilePath contains any of ('\\Users\\Public\\', '\\AppData\\Local\\MEGAsync', '\\AppData\\Roaming\\Mikogo', '\\AppData\\Roaming\\SyncTrayzor', '\\Downloads\\AMMYY_Admin.exe', '\\Insync.exe', '\\ProgramData\\AMMYY', '\\ProgramData\\Kaseya', '\\ProgramData\\Splashtop', 'ScreenConnect.Client.exe', 'WinSCP-Portable')
